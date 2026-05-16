@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Secure Login Page</title>
+    <style>
+        /* Baseline Layout Resets */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #0d0221;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Landscape Scene Art Stage Container */
+        .scene-stage {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #2d124d 0%, #781d4f 40%, #e65c40 75%, #234e32 100%);
+            z-index: 1;
+        }
+
+        /* Floating Particle Atmosphere Matrix */
+        .fireflies-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .firefly {
+            position: absolute;
+            background: #fcd34d;
+            border-radius: 50%;
+            filter: drop-shadow(0 0 6px #f59e0b);
+            animation: float-upwards 8s infinite ease-in-out;
+            opacity: 0;
+        }
+
+        /* Mountain Silhouette Vector Render Layers */
+        .mountains-svg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: auto;
+            z-index: 3;
+        }
+
+        .mountain-back { fill: #441651; }
+        .mountain-mid { fill: #220e3a; }
+        .mountain-front { fill: #0f1226; }
+
+        /* Foreground Glassmorphic Form Chassis */
+        .login-card-container {
+            position: relative;
+            width: 100%;
+            max-width: 380px;
+            padding: 2.5rem 2rem;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            z-index: 10;
+        }
+
+        .login-card-container h2 {
+            color: #ffffff;
+            font-size: 1.6rem;
+            margin-bottom: 0.25rem;
+            letter-spacing: 0.5px;
+        }
+
+        .login-card-container p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Form Controls Formatting rules */
+        .input-box {
+            position: relative;
+            margin-bottom: 1.25rem;
+            text-align: left;
+        }
+
+        .input-box label {
+            display: block;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.75rem;
+            margin-bottom: 0.4rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-box input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .input-box input:focus {
+            border-color: #10b981;
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+        }
+
+        /* Dynamic Options Ribbon Row */
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin: 1.5rem 0;
+        }
+
+        .form-options a {
+            color: #10b981;
+            text-decoration: none;
+        }
+
+        .form-options a:hover { text-decoration: underline; }
+
+        /* Action Form Submission Button */
+        .submit-btn {
+            width: 100%;
+            padding: 0.85rem;
+            background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            opacity: 0.95;
+            transform: translateY(-1px);
+        }
+
+        /* Social Authentication Integration Panel Layout */
+        .social-login {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .social-icon:hover {
+            background: rgba(255, 255, 255, 0.18);
+        }
+
+        /* Keyframes Vector Floating Animations */
+        @keyframes float-upwards {
+            0% {
+                transform: translateY(105vh) translateX(0) scale(0.6);
+                opacity: 0;
+            }
+            30% { opacity: 0.7; }
+            90% { opacity: 0.4; }
+            100% {
+                transform: translateY(-10vh) translateX(60px) scale(1.2);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Parallax Vector Scene Display Backdrop Layer -->
+    <div class="scene-stage">
+        <div class="fireflies-layer" id="ambientContainer"></div>
+        
+        <!-- Mountain Silhouette Geometries -->
+        <svg class="mountains-svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+            <path class="mountain-back" d="M0,160 L180,240 L420,120 L720,280 L1020,180 L1260,260 L1440,200 L1440,320 L0,320 Z"></path>
+            <path class="mountain-mid" d="M0,220 L240,160 L540,260 L840,140 L1140,240 L1440,190 L1440,320 L0,320 Z"></path>
+            <path class="mountain-front" d="M0,260 L360,220 L780,280 L1200,210 L1440,270 L1440,320 L0,320 Z"></path>
+        </svg>
+    </div>
+
+    <!-- Active Authentication Card Viewport Container -->
+    <main class="login-card-container">
+        <h2>Welcome Back</h2>
+        <p>Sign in to minimize access latency blocks</p>
+        
+        <form>
+            <div class="input-box">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Enter username string" required autocomplete="off">
+            </div>
+            <div class="input-box">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="••••••••" required>
+            </div>
+            
+            <div class="form-options">
+                <label><input type="checkbox" style="margin-right: 4px;"> Remember me</label>
+                <a href="#">Forgot password?</a>
+            </div>
+            
+            <button type="submit" class="submit-btn">Welcome In ➔</button>
+        </form>
+
+        <div class="social-login">
+            <div class="social-icon">G</div>
+            <div class="social-icon">Git</div>
+            <div class="social-icon">X</div>
+        </div>
+    </main>
+
+    <!-- JavaScript Particle Engine Generation Script -->
+    <script>
+        function seedAmbientFireflies() {
+            const container = document.getElementById('ambientContainer');
+            const totalParticles = 25;
+
+            for (let i = 0; i < totalParticles; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'firefly';
+                
+                // Randomize particle spawning matrix arrays
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.width = particle.style.height = (Math.random() * 5 + 3) + 'px';
+                
+                // Offset animation phases to spread particle stream
+                particle.style.animationDelay = (Math.random() * 8) + 's';
+                particle.style.animationDuration = (Math.random() * 6 + 6) + 's';
+
+                container.appendChild(particle);
+            }
+        }
+        window.addEventListener('DOMContentLoaded', seedAmbientFireflies);
+    </script>
+</body>
+</html>

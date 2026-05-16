@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nike Motion Carousel Animation</title>
+    
+    <!-- External Google Typography Engine Imports -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://googleapis.com" rel="stylesheet">
+
+    <style>
+        /* 1. Global Color Variables with Transition Mapping */
+        :root {
+            /* Fallback initialization color (Dark Bronze) */
+            --bg-color: #1c1512; 
+        }
+
+        /* Baseline Layout Configuration Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            /* 2. Bind the background property to our dynamic variable */
+            background-color: var(--bg-color);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            
+            /* 3. Smooth fade transition whenever variable shifts values */
+            transition: background-color 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* Main Viewport Workspace Chassis */
+        .showcase {
+            width: 100%;
+            max-width: 1000px;
+            height: 600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        /* Top Brand Typography Styling */
+        .brand {
+            text-align: center;
+            z-index: 10;
+        }
+
+        .brand-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.4em;
+            color: #a78bfa;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .brand h1 {
+            font-size: 1.8rem;
+            font-weight: 300;
+            letter-spacing: -0.5px;
+            color: #f3f4f6;
+        }
+
+        /* Carousel Content Layer Slider Stage */
+        .carousel-shelf {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1200px;
+        }
+
+        /* Card Structural Mechanics layout rule */
+        .product-card {
+            position: absolute;
+            width: 280px;
+            height: 340px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
+                        opacity 0.6s ease, 
+                        filter 0.6s ease;
+            z-index: 1;
+        }
+
+        /* Floating Footwear Layer Vector Graphics styling */
+        .shoe-graphic {
+            position: absolute;
+            top: -15%;
+            width: 115%;
+            height: auto;
+            filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.5));
+            transform: rotate(-15deg);
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            pointer-events: none;
+        }
+
+        /* Product Profile Metadata Rules */
+        .product-card h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 4px;
+            text-align: center;
+        }
+
+        .product-card span {
+            font-size: 0.85rem;
+            color: #9ca3af;
+        }
+
+        /* 3D State Machine Matrix Layer Transformations */
+        .product-card.prev {
+            transform: translateX(-240px) scale(0.8) rotateY(15deg);
+            opacity: 0.4;
+            filter: blur(2px);
+            pointer-events: none;
+        }
+
+        .product-card.active {
+            transform: translateX(0) scale(1) rotateY(0deg);
+            opacity: 1;
+            filter: blur(0);
+            z-index: 5;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        .product-card.active .shoe-graphic {
+            transform: rotate(-10deg) translateY(-10px) scale(1.05);
+        }
+
+        .product-card.next {
+            transform: translateX(240px) scale(0.8) rotateY(-15deg);
+            opacity: 0.4;
+            filter: blur(2px);
+            pointer-events: none;
+        }
+
+        .product-card.hidden {
+            transform: scale(0.5);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* Navigation Command Bar Control Deck Rules */
+        .controls {
+            display: flex;
+            gap: 1rem;
+            z-index: 10;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 10px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            background: #ffffff;
+            color: #1c1512;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-btn:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <main class="showcase">
+        <header class="brand">
+            <div class="brand-label">Nike</div>
+            <h1>Motion Product Carousel</h1>
+        </header>
+
+        <!-- 4. Added 'data-color' attributes matching each distinct sneaker model -->
+        <section class="carousel-shelf" id="carouselShelf" aria-label="Nike shoe carousel">
+            
+            <div class="product-card" data-color="#2d221c">
+                <img class="shoe-graphic" src="https://images.pexels.com/photos/12611637/pexels-photo-12611637.jpeg" alt="Nike Air Force 1">
+                <h2>Nike Air Force 1</h2>
+                <span>$110</span>
+            </div>
+
+            <div class="product-card" data-color="#14282d">
+                <img class="shoe-graphic" src="https://images.pexels.com/photos/10853637/pexels-photo-10853637.jpeg" alt="Nike Air Jordan 1">
+                <h2>Nike Air Jordan 1</h2>
+                <span>$180</span>
+            </div>
+
+            <div class="product-card" data-color="#341b24">
+                <img class="shoe-graphic" src="https://images.pexels.com/photos/33652196/pexels-photo-33652196.jpeg" alt="Nike Air Max 90">
+                <h2>Nike Air Max 90</h2>
+                <span>$130</span>
+            </div>
+
+        </section>
+
+        <footer class="controls">
+            <button class="nav-btn" id="prevBtn" aria-label="Previous shoe">Prev</button>
+            <button class="nav-btn" id="nextBtn" aria-label="Next shoe">Next</button>
+        </footer>
+    </main>
+
+    <script>
+        const cards = document.querySelectorAll('.product-card');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        
+        let activeIndex = 1;
+
+        function updateCarouselStates() {
+            cards.forEach((card, index) => {
+                card.classList.remove('prev', 'active', 'next', 'hidden');
+
+                if (index === activeIndex) {
+                    card.classList.add('active');
+                    
+                    // 5. Read target hex string from the active card's data dataset
+                    const targetColor = card.getAttribute('data-color');
+                    
+                    // 6. Push newest hex string to override the document root element
+                    document.documentElement.style.setProperty('--bg-color', targetColor);
+                    
+                } else if (index === (activeIndex - 1 + cards.length) % cards.length) {
+                    card.classList.add('prev');
+                } else if (index === (activeIndex + 1) % cards.length) {
+                    card.classList.add('next');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        prevBtn.addEventListener('click', () => {
+            activeIndex = (activeIndex - 1 + cards.length) % cards.length;
+            updateCarouselStates();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            activeIndex = (activeIndex + 1) % cards.length;
+            updateCarouselStates();
+        });
+
+        updateCarouselStates();
+    </script>
+</body>
+</html>
