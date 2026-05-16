@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Animated Navbar</title>
+    <link rel="stylesheet" href="navbar.css">
+
+   <style>
+    /* Document Baseline Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #bfdbfe; /* Light retro blue backdrop */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* Outer Console Container matching display image */
+.display-container {
+    width: 100%;
+    max-width: 1000px;
+    padding: 60px 40px;
+    background-color: #1a2e6b; /* Dark navy inner display box */
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Navbar Container Mechanics from Snippet */
+.navbar {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 50px;
+    width: 900px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* Retro Branding Logo Typography */
+.logo {
+    color: #38bdf8; /* Cyber neon blue */
+    font-weight: bold;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    text-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
+    cursor: pointer;
+}
+
+/* Horizontal Unordered List Control */
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 35px;
+}
+
+/* Link Actions & Dynamic Hover Animations */
+.nav-links a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 500;
+    position: relative;
+    padding: 4px 0;
+    transition: color 0.3s ease;
+}
+
+/* Target Underline Indicator Generation */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #38bdf8;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Animated Hover States */
+.nav-links a:hover {
+    color: #38bdf8;
+}
+
+.nav-links a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+</style>
+</head>
+<body>
+    <!-- Main Outer Hero Display Block -->
+    <div class="display-container">
+        <nav class="navbar">
+            <div class="logo">STEPHEN ODUOR</div>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Projects</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+
+
+    
+</body>
+</html>
